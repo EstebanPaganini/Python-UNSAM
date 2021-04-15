@@ -1,0 +1,353 @@
+'''
+Ejercicio 1.7: La hipoteca de David
+David solicitó un crédito a 30 años para comprar una vivienda, con una tasa fija nominal anual del 5%. Pidió $500000 al banco y acordó un pago mensual fijo de $2684,11.
+
+El siguiente es un programa que calcula el monto total que pagará David a lo largo de los años:
+
+# hipoteca.py
+
+saldo = 500000.0
+tasa = 0.05
+pago_mensual = 2684.11
+total_pagado = 0.0
+
+while saldo > 0:
+    saldo = saldo * (1+tasa/12) - pago_mensual
+    total_pagado = total_pagado + pago_mensual
+
+print('Total pagado', round(total_pagado, 2))
+Copiá este código y correlo. Deberías obtener 966279.6 como respuesta.
+
+Ejercicio 1.8: Adelantos
+Supongamos que David adelanta pagos extra de $1000/mes durante los primeros 12 meses de la hipoteca.
+
+Modificá el programa para incorporar estos pagos extra y que imprima el monto total pagado junto con la cantidad de meses requeridos.
+
+Cuando lo corras, este nuevo programa debería dar un pago total de 929965.62 en 342 meses.
+
+Aclaración: aunque puede parecer sencillo, este ejercicio requiere que agregues una variable mes y que prestes bastante atención a cuándo la incrementás, 
+con qué valor entra al ciclo y con qué valor sale del ciclo. Una posiblidad es inicializar mes en 0 y otra es inicializarla en 1. En el primer caso es problable que la variable
+salga del ciclo contando la cantidad de pagos que se hicieron, en el segundo, ¡es probable que salga contando la cantidad de pagos más uno!
+
+Ejercicio 1.9: Calculadora de adelantos
+¿Cuánto pagaría David si agrega $1000 por mes durante cuatro años, comenzando en el sexto año de la hipoteca (es decir, luego de 5 años)?
+
+Modificá tu programa de forma que la información sobre pagos extras sea incorporada de manera versátil. Agregá las siguientes variables antes del ciclo, para definir el comienzo,
+fin y monto de los pagos extras:
+
+pago_extra_mes_comienzo = 61
+pago_extra_mes_fin = 108
+pago_extra = 1000
+Hacé que el programa tenga en cuenta estas variables para calcular el total a pagar apropiadamente.
+
+Ejercicio 1.10: Tablas
+Modicá tu programa para que imprima una tabla mostrando el mes, el total pagado hasta el momento y el saldo restante. La salida debería verse aproximadamente así:
+
+1 2684.11 499399.22
+2 5368.22 498795.94
+3 8052.33 498190.15
+4 10736.44 497581.83
+5 13420.55 496970.98
+...
+308 874705.88 3478.83
+309 877389.99 809.21
+310 880074.1 -1871.53
+Total pagado:  880074.1
+Meses:  310
+
+Ejercicio 1.11: Bonus
+Ya que estamos, corregí el código anterior de forma que el pago del último mes se ajuste a lo adeudado.
+#####################################
+RTA:
+saldo = 500000.0
+tasa = 0.05
+pago_mensual = 2684.11
+total_pagado = 0.0
+mes = 0
+pagos_extra = 1000
+comienzo_pago_extra = 61
+fin_pago_extra = 108
+
+while saldo > 0:
+    mes = mes + 1
+    if mes >= comienzo_pago_extra and mes <= fin_pago_extra:
+         saldo = (saldo - pagos_extra) * (1+tasa/12) - pago_mensual
+         total_pagado = total_pagado + pago_mensual + pagos_extra
+         
+    else:
+        saldo = saldo * (1+tasa/12) - pago_mensual
+        total_pagado = total_pagado + pago_mensual
+        saldo_restante = saldo
+        print('Mes:', mes, 'Total pagado:', round(total_pagado, 2), 'Saldo restante:', round(saldo_restante, 2))
+        
+    if saldo * (1+tasa/12) < pago_mensual:
+        pago_mensual = saldo * (1+tasa/12)
+
+print('TOTAL PAGADO:', round(total_pagado, 2))
+print('Cantidad de meses:', mes)
+#######################################
+SALIDA:
+Mes: 1 Total pagado: 2684.11 Saldo restante: 499399.22
+Mes: 2 Total pagado: 5368.22 Saldo restante: 498795.94
+Mes: 3 Total pagado: 8052.33 Saldo restante: 498190.15
+Mes: 4 Total pagado: 10736.44 Saldo restante: 497581.83
+Mes: 5 Total pagado: 13420.55 Saldo restante: 496970.98
+Mes: 6 Total pagado: 16104.66 Saldo restante: 496357.58
+Mes: 7 Total pagado: 18788.77 Saldo restante: 495741.63
+Mes: 8 Total pagado: 21472.88 Saldo restante: 495123.11
+Mes: 9 Total pagado: 24156.99 Saldo restante: 494502.01
+Mes: 10 Total pagado: 26841.1 Saldo restante: 493878.33
+Mes: 11 Total pagado: 29525.21 Saldo restante: 493252.04
+Mes: 12 Total pagado: 32209.32 Saldo restante: 492623.15
+Mes: 13 Total pagado: 34893.43 Saldo restante: 491991.64
+Mes: 14 Total pagado: 37577.54 Saldo restante: 491357.49
+Mes: 15 Total pagado: 40261.65 Saldo restante: 490720.7
+Mes: 16 Total pagado: 42945.76 Saldo restante: 490081.26
+Mes: 17 Total pagado: 45629.87 Saldo restante: 489439.16
+Mes: 18 Total pagado: 48313.98 Saldo restante: 488794.38
+Mes: 19 Total pagado: 50998.09 Saldo restante: 488146.91
+Mes: 20 Total pagado: 53682.2 Saldo restante: 487496.75
+Mes: 21 Total pagado: 56366.31 Saldo restante: 486843.87
+Mes: 22 Total pagado: 59050.42 Saldo restante: 486188.28
+Mes: 23 Total pagado: 61734.53 Saldo restante: 485529.96
+Mes: 24 Total pagado: 64418.64 Saldo restante: 484868.89
+Mes: 25 Total pagado: 67102.75 Saldo restante: 484205.06
+Mes: 26 Total pagado: 69786.86 Saldo restante: 483538.47
+Mes: 27 Total pagado: 72470.97 Saldo restante: 482869.11
+Mes: 28 Total pagado: 75155.08 Saldo restante: 482196.95
+Mes: 29 Total pagado: 77839.19 Saldo restante: 481522.0
+Mes: 30 Total pagado: 80523.3 Saldo restante: 480844.23
+Mes: 31 Total pagado: 83207.41 Saldo restante: 480163.64
+Mes: 32 Total pagado: 85891.52 Saldo restante: 479480.21
+Mes: 33 Total pagado: 88575.63 Saldo restante: 478793.93
+Mes: 34 Total pagado: 91259.74 Saldo restante: 478104.8
+Mes: 35 Total pagado: 93943.85 Saldo restante: 477412.79
+Mes: 36 Total pagado: 96627.96 Saldo restante: 476717.9
+Mes: 37 Total pagado: 99312.07 Saldo restante: 476020.11
+Mes: 38 Total pagado: 101996.18 Saldo restante: 475319.42
+Mes: 39 Total pagado: 104680.29 Saldo restante: 474615.81
+Mes: 40 Total pagado: 107364.4 Saldo restante: 473909.27
+Mes: 41 Total pagado: 110048.51 Saldo restante: 473199.78
+Mes: 42 Total pagado: 112732.62 Saldo restante: 472487.33
+Mes: 43 Total pagado: 115416.73 Saldo restante: 471771.92
+Mes: 44 Total pagado: 118100.84 Saldo restante: 471053.53
+Mes: 45 Total pagado: 120784.95 Saldo restante: 470332.14
+Mes: 46 Total pagado: 123469.06 Saldo restante: 469607.75
+Mes: 47 Total pagado: 126153.17 Saldo restante: 468880.34
+Mes: 48 Total pagado: 128837.28 Saldo restante: 468149.89
+Mes: 49 Total pagado: 131521.39 Saldo restante: 467416.41
+Mes: 50 Total pagado: 134205.5 Saldo restante: 466679.87
+Mes: 51 Total pagado: 136889.61 Saldo restante: 465940.26
+Mes: 52 Total pagado: 139573.72 Saldo restante: 465197.56
+Mes: 53 Total pagado: 142257.83 Saldo restante: 464451.78
+Mes: 54 Total pagado: 144941.94 Saldo restante: 463702.88
+Mes: 55 Total pagado: 147626.05 Saldo restante: 462950.87
+Mes: 56 Total pagado: 150310.16 Saldo restante: 462195.72
+Mes: 57 Total pagado: 152994.27 Saldo restante: 461437.43
+Mes: 58 Total pagado: 155678.38 Saldo restante: 460675.97
+Mes: 59 Total pagado: 158362.49 Saldo restante: 459911.34
+Mes: 60 Total pagado: 161046.6 Saldo restante: 459143.53
+Mes: 109 Total pagado: 340567.99 Saldo restante: 363869.5
+Mes: 110 Total pagado: 343252.1 Saldo restante: 362701.51
+Mes: 111 Total pagado: 345936.21 Saldo restante: 361528.66
+Mes: 112 Total pagado: 348620.32 Saldo restante: 360350.92
+Mes: 113 Total pagado: 351304.43 Saldo restante: 359168.27
+Mes: 114 Total pagado: 353988.54 Saldo restante: 357980.7
+Mes: 115 Total pagado: 356672.65 Saldo restante: 356788.17
+Mes: 116 Total pagado: 359356.76 Saldo restante: 355590.68
+Mes: 117 Total pagado: 362040.87 Saldo restante: 354388.2
+Mes: 118 Total pagado: 364724.98 Saldo restante: 353180.71
+Mes: 119 Total pagado: 367409.09 Saldo restante: 351968.18
+Mes: 120 Total pagado: 370093.2 Saldo restante: 350750.61
+Mes: 121 Total pagado: 372777.31 Saldo restante: 349527.96
+Mes: 122 Total pagado: 375461.42 Saldo restante: 348300.21
+Mes: 123 Total pagado: 378145.53 Saldo restante: 347067.35
+Mes: 124 Total pagado: 380829.64 Saldo restante: 345829.36
+Mes: 125 Total pagado: 383513.75 Saldo restante: 344586.2
+Mes: 126 Total pagado: 386197.86 Saldo restante: 343337.87
+Mes: 127 Total pagado: 388881.97 Saldo restante: 342084.33
+Mes: 128 Total pagado: 391566.08 Saldo restante: 340825.58
+Mes: 129 Total pagado: 394250.19 Saldo restante: 339561.57
+Mes: 130 Total pagado: 396934.3 Saldo restante: 338292.3
+Mes: 131 Total pagado: 399618.41 Saldo restante: 337017.74
+Mes: 132 Total pagado: 402302.52 Saldo restante: 335737.87
+Mes: 133 Total pagado: 404986.63 Saldo restante: 334452.67
+Mes: 134 Total pagado: 407670.74 Saldo restante: 333162.11
+Mes: 135 Total pagado: 410354.85 Saldo restante: 331866.18
+Mes: 136 Total pagado: 413038.96 Saldo restante: 330564.85
+Mes: 137 Total pagado: 415723.07 Saldo restante: 329258.09
+Mes: 138 Total pagado: 418407.18 Saldo restante: 327945.89
+Mes: 139 Total pagado: 421091.29 Saldo restante: 326628.22
+Mes: 140 Total pagado: 423775.4 Saldo restante: 325305.06
+Mes: 141 Total pagado: 426459.51 Saldo restante: 323976.39
+Mes: 142 Total pagado: 429143.62 Saldo restante: 322642.18
+Mes: 143 Total pagado: 431827.73 Saldo restante: 321302.41
+Mes: 144 Total pagado: 434511.84 Saldo restante: 319957.06
+Mes: 145 Total pagado: 437195.95 Saldo restante: 318606.11
+Mes: 146 Total pagado: 439880.06 Saldo restante: 317249.52
+Mes: 147 Total pagado: 442564.17 Saldo restante: 315887.28
+Mes: 148 Total pagado: 445248.28 Saldo restante: 314519.37
+Mes: 149 Total pagado: 447932.39 Saldo restante: 313145.76
+Mes: 150 Total pagado: 450616.5 Saldo restante: 311766.42
+Mes: 151 Total pagado: 453300.61 Saldo restante: 310381.34
+Mes: 152 Total pagado: 455984.72 Saldo restante: 308990.49
+Mes: 153 Total pagado: 458668.83 Saldo restante: 307593.84
+Mes: 154 Total pagado: 461352.94 Saldo restante: 306191.37
+Mes: 155 Total pagado: 464037.05 Saldo restante: 304783.05
+Mes: 156 Total pagado: 466721.16 Saldo restante: 303368.87
+Mes: 157 Total pagado: 469405.27 Saldo restante: 301948.8
+Mes: 158 Total pagado: 472089.38 Saldo restante: 300522.81
+Mes: 159 Total pagado: 474773.49 Saldo restante: 299090.88
+Mes: 160 Total pagado: 477457.6 Saldo restante: 297652.98
+Mes: 161 Total pagado: 480141.71 Saldo restante: 296209.09
+Mes: 162 Total pagado: 482825.82 Saldo restante: 294759.19
+Mes: 163 Total pagado: 485509.93 Saldo restante: 293303.24
+Mes: 164 Total pagado: 488194.04 Saldo restante: 291841.23
+Mes: 165 Total pagado: 490878.15 Saldo restante: 290373.12
+Mes: 166 Total pagado: 493562.26 Saldo restante: 288898.9
+Mes: 167 Total pagado: 496246.37 Saldo restante: 287418.53
+Mes: 168 Total pagado: 498930.48 Saldo restante: 285932.0
+Mes: 169 Total pagado: 501614.59 Saldo restante: 284439.27
+Mes: 170 Total pagado: 504298.7 Saldo restante: 282940.33
+Mes: 171 Total pagado: 506982.81 Saldo restante: 281435.14
+Mes: 172 Total pagado: 509666.92 Saldo restante: 279923.67
+Mes: 173 Total pagado: 512351.03 Saldo restante: 278405.91
+Mes: 174 Total pagado: 515035.14 Saldo restante: 276881.83
+Mes: 175 Total pagado: 517719.25 Saldo restante: 275351.39
+Mes: 176 Total pagado: 520403.36 Saldo restante: 273814.58
+Mes: 177 Total pagado: 523087.47 Saldo restante: 272271.36
+Mes: 178 Total pagado: 525771.58 Saldo restante: 270721.72
+Mes: 179 Total pagado: 528455.69 Saldo restante: 269165.61
+Mes: 180 Total pagado: 531139.8 Saldo restante: 267603.03
+Mes: 181 Total pagado: 533823.91 Saldo restante: 266033.93
+Mes: 182 Total pagado: 536508.02 Saldo restante: 264458.29
+Mes: 183 Total pagado: 539192.13 Saldo restante: 262876.09
+Mes: 184 Total pagado: 541876.24 Saldo restante: 261287.3
+Mes: 185 Total pagado: 544560.35 Saldo restante: 259691.89
+Mes: 186 Total pagado: 547244.46 Saldo restante: 258089.83
+Mes: 187 Total pagado: 549928.57 Saldo restante: 256481.09
+Mes: 188 Total pagado: 552612.68 Saldo restante: 254865.65
+Mes: 189 Total pagado: 555296.79 Saldo restante: 253243.48
+Mes: 190 Total pagado: 557980.9 Saldo restante: 251614.55
+Mes: 191 Total pagado: 560665.01 Saldo restante: 249978.84
+Mes: 192 Total pagado: 563349.12 Saldo restante: 248336.31
+Mes: 193 Total pagado: 566033.23 Saldo restante: 246686.93
+Mes: 194 Total pagado: 568717.34 Saldo restante: 245030.68
+Mes: 195 Total pagado: 571401.45 Saldo restante: 243367.53
+Mes: 196 Total pagado: 574085.56 Saldo restante: 241697.46
+Mes: 197 Total pagado: 576769.67 Saldo restante: 240020.42
+Mes: 198 Total pagado: 579453.78 Saldo restante: 238336.39
+Mes: 199 Total pagado: 582137.89 Saldo restante: 236645.35
+Mes: 200 Total pagado: 584822.0 Saldo restante: 234947.26
+Mes: 201 Total pagado: 587506.11 Saldo restante: 233242.1
+Mes: 202 Total pagado: 590190.22 Saldo restante: 231529.83
+Mes: 203 Total pagado: 592874.33 Saldo restante: 229810.43
+Mes: 204 Total pagado: 595558.44 Saldo restante: 228083.86
+Mes: 205 Total pagado: 598242.55 Saldo restante: 226350.1
+Mes: 206 Total pagado: 600926.66 Saldo restante: 224609.12
+Mes: 207 Total pagado: 603610.77 Saldo restante: 222860.88
+Mes: 208 Total pagado: 606294.88 Saldo restante: 221105.36
+Mes: 209 Total pagado: 608978.99 Saldo restante: 219342.52
+Mes: 210 Total pagado: 611663.1 Saldo restante: 217572.34
+Mes: 211 Total pagado: 614347.21 Saldo restante: 215794.78
+Mes: 212 Total pagado: 617031.32 Saldo restante: 214009.81
+Mes: 213 Total pagado: 619715.43 Saldo restante: 212217.41
+Mes: 214 Total pagado: 622399.54 Saldo restante: 210417.54
+Mes: 215 Total pagado: 625083.65 Saldo restante: 208610.17
+Mes: 216 Total pagado: 627767.76 Saldo restante: 206795.27
+Mes: 217 Total pagado: 630451.87 Saldo restante: 204972.81
+Mes: 218 Total pagado: 633135.98 Saldo restante: 203142.75
+Mes: 219 Total pagado: 635820.09 Saldo restante: 201305.07
+Mes: 220 Total pagado: 638504.2 Saldo restante: 199459.73
+Mes: 221 Total pagado: 641188.31 Saldo restante: 197606.7
+Mes: 222 Total pagado: 643872.42 Saldo restante: 195745.95
+Mes: 223 Total pagado: 646556.53 Saldo restante: 193877.45
+Mes: 224 Total pagado: 649240.64 Saldo restante: 192001.16
+Mes: 225 Total pagado: 651924.75 Saldo restante: 190117.06
+Mes: 226 Total pagado: 654608.86 Saldo restante: 188225.1
+Mes: 227 Total pagado: 657292.97 Saldo restante: 186325.26
+Mes: 228 Total pagado: 659977.08 Saldo restante: 184417.51
+Mes: 229 Total pagado: 662661.19 Saldo restante: 182501.81
+Mes: 230 Total pagado: 665345.3 Saldo restante: 180578.12
+Mes: 231 Total pagado: 668029.41 Saldo restante: 178646.42
+Mes: 232 Total pagado: 670713.52 Saldo restante: 176706.67
+Mes: 233 Total pagado: 673397.63 Saldo restante: 174758.84
+Mes: 234 Total pagado: 676081.74 Saldo restante: 172802.89
+Mes: 235 Total pagado: 678765.85 Saldo restante: 170838.79
+Mes: 236 Total pagado: 681449.96 Saldo restante: 168866.51
+Mes: 237 Total pagado: 684134.07 Saldo restante: 166886.01
+Mes: 238 Total pagado: 686818.18 Saldo restante: 164897.26
+Mes: 239 Total pagado: 689502.29 Saldo restante: 162900.22
+Mes: 240 Total pagado: 692186.4 Saldo restante: 160894.86
+Mes: 241 Total pagado: 694870.51 Saldo restante: 158881.14
+Mes: 242 Total pagado: 697554.62 Saldo restante: 156859.04
+Mes: 243 Total pagado: 700238.73 Saldo restante: 154828.51
+Mes: 244 Total pagado: 702922.84 Saldo restante: 152789.52
+Mes: 245 Total pagado: 705606.95 Saldo restante: 150742.03
+Mes: 246 Total pagado: 708291.06 Saldo restante: 148686.01
+Mes: 247 Total pagado: 710975.17 Saldo restante: 146621.43
+Mes: 248 Total pagado: 713659.28 Saldo restante: 144548.24
+Mes: 249 Total pagado: 716343.39 Saldo restante: 142466.41
+Mes: 250 Total pagado: 719027.5 Saldo restante: 140375.91
+Mes: 251 Total pagado: 721711.61 Saldo restante: 138276.7
+Mes: 252 Total pagado: 724395.72 Saldo restante: 136168.75
+Mes: 253 Total pagado: 727079.83 Saldo restante: 134052.01
+Mes: 254 Total pagado: 729763.94 Saldo restante: 131926.45
+Mes: 255 Total pagado: 732448.05 Saldo restante: 129792.03
+Mes: 256 Total pagado: 735132.16 Saldo restante: 127648.72
+Mes: 257 Total pagado: 737816.27 Saldo restante: 125496.48
+Mes: 258 Total pagado: 740500.38 Saldo restante: 123335.27
+Mes: 259 Total pagado: 743184.49 Saldo restante: 121165.06
+Mes: 260 Total pagado: 745868.6 Saldo restante: 118985.8
+Mes: 261 Total pagado: 748552.71 Saldo restante: 116797.47
+Mes: 262 Total pagado: 751236.82 Saldo restante: 114600.01
+Mes: 263 Total pagado: 753920.93 Saldo restante: 112393.4
+Mes: 264 Total pagado: 756605.04 Saldo restante: 110177.6
+Mes: 265 Total pagado: 759289.15 Saldo restante: 107952.56
+Mes: 266 Total pagado: 761973.26 Saldo restante: 105718.26
+Mes: 267 Total pagado: 764657.37 Saldo restante: 103474.64
+Mes: 268 Total pagado: 767341.48 Saldo restante: 101221.67
+Mes: 269 Total pagado: 770025.59 Saldo restante: 98959.32
+Mes: 270 Total pagado: 772709.7 Saldo restante: 96687.54
+Mes: 271 Total pagado: 775393.81 Saldo restante: 94406.29
+Mes: 272 Total pagado: 778077.92 Saldo restante: 92115.54
+Mes: 273 Total pagado: 780762.03 Saldo restante: 89815.25
+Mes: 274 Total pagado: 783446.14 Saldo restante: 87505.37
+Mes: 275 Total pagado: 786130.25 Saldo restante: 85185.87
+Mes: 276 Total pagado: 788814.36 Saldo restante: 82856.7
+Mes: 277 Total pagado: 791498.47 Saldo restante: 80517.82
+Mes: 278 Total pagado: 794182.58 Saldo restante: 78169.2
+Mes: 279 Total pagado: 796866.69 Saldo restante: 75810.8
+Mes: 280 Total pagado: 799550.8 Saldo restante: 73442.57
+Mes: 281 Total pagado: 802234.91 Saldo restante: 71064.47
+Mes: 282 Total pagado: 804919.02 Saldo restante: 68676.46
+Mes: 283 Total pagado: 807603.13 Saldo restante: 66278.5
+Mes: 284 Total pagado: 810287.24 Saldo restante: 63870.55
+Mes: 285 Total pagado: 812971.35 Saldo restante: 61452.57
+Mes: 286 Total pagado: 815655.46 Saldo restante: 59024.51
+Mes: 287 Total pagado: 818339.57 Saldo restante: 56586.34
+Mes: 288 Total pagado: 821023.68 Saldo restante: 54138.0
+Mes: 289 Total pagado: 823707.79 Saldo restante: 51679.47
+Mes: 290 Total pagado: 826391.9 Saldo restante: 49210.69
+Mes: 291 Total pagado: 829076.01 Saldo restante: 46731.62
+Mes: 292 Total pagado: 831760.12 Saldo restante: 44242.23
+Mes: 293 Total pagado: 834444.23 Saldo restante: 41742.46
+Mes: 294 Total pagado: 837128.34 Saldo restante: 39232.28
+Mes: 295 Total pagado: 839812.45 Saldo restante: 36711.64
+Mes: 296 Total pagado: 842496.56 Saldo restante: 34180.49
+Mes: 297 Total pagado: 845180.67 Saldo restante: 31638.8
+Mes: 298 Total pagado: 847864.78 Saldo restante: 29086.52
+Mes: 299 Total pagado: 850548.89 Saldo restante: 26523.6
+Mes: 300 Total pagado: 853233.0 Saldo restante: 23950.01
+Mes: 301 Total pagado: 855917.11 Saldo restante: 21365.69
+Mes: 302 Total pagado: 858601.22 Saldo restante: 18770.6
+Mes: 303 Total pagado: 861285.33 Saldo restante: 16164.7
+Mes: 304 Total pagado: 863969.44 Saldo restante: 13547.95
+Mes: 305 Total pagado: 866653.55 Saldo restante: 10920.29
+Mes: 306 Total pagado: 869337.66 Saldo restante: 8281.68
+Mes: 307 Total pagado: 872021.77 Saldo restante: 5632.07
+Mes: 308 Total pagado: 874705.88 Saldo restante: 2971.43
+Mes: 309 Total pagado: 877389.99 Saldo restante: 299.7
+Mes: 310 Total pagado: 877690.94 Saldo restante: 0.0
+TOTAL PAGADO: 877690.94
+Cantidad de meses: 310
