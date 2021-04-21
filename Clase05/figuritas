@@ -1,0 +1,125 @@
+import random
+import numpy as np
+#%%
+#EJERCICIO 5.9
+def crear_album(cantidad_figus):
+    album = np.zeros(cantidad_figus)
+    return album
+#%%
+###############################################
+#EJERCICIO 5.10
+def album_incompleto(album):
+    incompleto = False
+    for e in album:
+        if e == 0:
+            incompleto = True
+        else: 
+            incompleto
+    return incompleto
+            
+#album_nuevo = crear_album(670)
+#print(album_incompleto(album_nuevo))
+#rta: True
+#%%
+###############################################
+#EJERCICIO 5.11
+def comprar_figu(figus_total):
+    figu = random.randint(1,figus_total)
+    return figu
+#print(comprar_figu(670))
+#%%
+###############################################
+#EJERCICIO 5.12
+def cuantas_figus(figus_total):
+    album = crear_album(figus_total)
+    while album_incompleto(album) == True:
+            figu = comprar_figu(figus_total)
+            album[figu-1] += 1
+        
+    return sum(album)
+
+#print(f'¡Felicidades, completaste el album.! solo tuviste que comprar {cuantas_figus(670)} figus')
+#rta: ¡Felicidades, completaste el album.! solo tuviste que comprar 5443.0 figus 
+#%%
+###############################################
+#EJERCICIO 5.13
+N = 100
+#G = [cuantas_figus(670) for i in range(N)]
+#print (f' En promedio hay que comprar {np.mean(G):.0f} figuritas')
+#rta: En promedio hay que comprar 4773 figuritas
+#%%
+###############################################
+#EJERCICIO 5.14
+N = 100
+#G = [cuantas_figus(670) for i in range(N)]
+#print (f' En promedio hay que comprar {np.mean(G):.0f} figuritas')
+#%%
+###############################################
+#EJERCICIO 5.15
+
+def figus_paquete(figus):
+    figu=[]
+    for i in range(figus):
+        figu.append(random.randint(1,670))  
+    return figu
+
+#print(figus_paquete(5))
+#rta: [209, 70, 379, 291, 179]
+#%%
+###############################################
+#EJERCICIO 5.16
+def comprar_paquete(figus_total, figus_paquete):
+    paquete = []
+    for i in range(figus_paquete):
+        paquete.append(random.randint(1, figus_total))
+    return paquete
+        
+#print(comprar_paquete(670, 5))
+#rta: [193, 56, 460, 231, 322]
+#%%
+###############################################
+#EJERCICIO 5.17
+def cuantos_paquetes(figus_total, figus_paquete):
+    album = crear_album(figus_total)
+    cant_paquete= 0
+    while album_incompleto(album)==True:
+        paquete = comprar_paquete(figus_total, figus_paquete)
+        cant_paquete +=1
+        for i in paquete:
+            album[i-1] = 1
+    return cant_paquete
+        
+#print(f' Se debieron comprar {cuantos_paquetes(670, 5)} paquetes para completar el album' )
+#rta: Se debieron comprar 844 paquetes para completar el album
+#%%
+###############################################
+#EJERCICIO 5.18
+N = 100
+#G = [cuantos_paquetes(670,5) for i in range(N)]
+#print (f' En promedio hay que comprar {np.mean(G):.0f} paquetes para completar un album')
+#rta: En promedio hay que comprar 948 paquetes para completar un album
+###############################################
+#%%
+from matplotlib import pyplot as plt
+
+def calcular_historia_figus_pegadas(figus_total, figus_paquete):
+    album = crear_album(figus_total)
+    historia_figus_pegadas = [0]
+    while album_incompleto(album):
+        paquete = comprar_paquete(figus_total, figus_paquete)
+        while paquete:
+            album[paquete.pop()-1] = 1
+        figus_pegadas = (album>0).sum()
+        historia_figus_pegadas.append(figus_pegadas)        
+    return historia_figus_pegadas
+
+figus_total = 670
+figus_paquete = 5
+
+
+plt.plot(calcular_historia_figus_pegadas(figus_total, figus_paquete))
+plt.xlabel("Cantidad de paquetes comprados.")
+plt.ylabel("Cantidad de figuritas pegadas.")
+plt.title("La curva de llenado se desacelera al final")
+
+plt.show()
