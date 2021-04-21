@@ -1,0 +1,37 @@
+##########################
+#EJERCICIO 6.8 y 6.9
+import csv
+
+def parse_csv(nombre_archivo, select = None, types = None, encabezados = True):
+    with open(nombre_archivo) as f:
+        filas = csv.reader(f)
+        if encabezados:
+            encabezados = next(filas)
+            if select:
+                indices = [encabezados.index(nombre_columna) for nombre_columna in select]
+                encabezados = select
+            else:
+                indices = []
+            registros = []
+           
+            for fila in filas:
+                if not fila:    
+                    continue
+                if indices:
+                    fila = [fila[index] for index in indices]
+                if types:
+                    fila = [func(val) for func, val in zip(types, fila)]
+        
+                registro = dict(zip(encabezados, fila))
+                registros.append(registro)
+            return registros
+        if encabezados == False:
+            registro =[]
+            for fila in filas:
+                if not fila:    
+                    continue
+                if types:
+                    fila = [func(val) for func, val in zip(types, fila)]
+                    lote = (fila[0],fila[1])
+                    registro.append(lote)
+            return registro
