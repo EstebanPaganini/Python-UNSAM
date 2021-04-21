@@ -1,0 +1,33 @@
+#EJERCICIO 4.6
+lista = [1,2,3,2,3,4]
+def buscar_u_elementos(lista, e):
+        pos = -1  
+        for i, z in enumerate(lista): 
+            if z == e:   
+                pos = i  
+                break    
+        return pos
+'''print(buscar_u_elementos(lista, 3))'''
+
+def buscar_n_elementos(lista,e):
+    cant = 0
+    for z in lista: 
+        if z == e:
+            cant += 1
+    return cant   
+'''print(buscar_n_elementos(lista,2))'''
+###################################################
+#EJERCICIO 4.7
+def maximo(lista):
+    m = 0
+    for e in lista:
+        m = max(lista)
+    return m
+'''print(maximo([-5,-4]))'''#NO ME TIRA 0 COMO EN LOS EJEMPLOS DE
+#LOS EJERCICIOS, ME DA BIEN EL RESULTADO DE LA FUNCION.
+def minimo(lista):
+    m = 0
+    for e in lista:
+        m = min(lista)
+    return m
+'''print(minimo([-80,-4]))'''
